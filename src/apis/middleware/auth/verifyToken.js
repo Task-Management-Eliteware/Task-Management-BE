@@ -1,4 +1,5 @@
-const { verifyJwt, Api401Error } = require('../../../shared');
+const { Users } = require('../../../db');
+const { verifyJwt, Api401Error, Api404Error } = require('../../../shared');
 
 const verifyToken = async (req, res, next) => {
   try {
@@ -11,8 +12,14 @@ const verifyToken = async (req, res, next) => {
     }
 
     const token = authorization.split(' ')[1];
-    const decodeUser = await verifyJwt(token);
+    const decodeToken = await verifyJwt(token);
+    const { userId } = decodeToken.user;
 
+    const user = await Users.findOne({ _id: userId, isActive: true }).lean();
+    if (!user) {
+      throw new Api404Error('Invalid user.');
+    }
+    req.authorizedUser = { ...user };
     next();
   } catch (err) {
     return next(err);

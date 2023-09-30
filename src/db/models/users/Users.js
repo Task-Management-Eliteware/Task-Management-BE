@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { collections } = require('../../../shared');
+const { boolean } = require('joi');
 
 const modelName = collections.users;
 
@@ -23,6 +24,10 @@ const schema = new mongoose.Schema(
       type: String,
       required: true,
       select: false,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
     },
   },
   { timestamps: true }

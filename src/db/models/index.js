@@ -1,1 +1,1 @@
-module.exports = { ...require('./Users') };
+module.exports = { ...require('./Users'), ...require('./tasks') };

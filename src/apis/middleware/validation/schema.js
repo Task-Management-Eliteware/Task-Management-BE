@@ -9,6 +9,7 @@ const fields = {
   email: Joi.string().regex(REGEX.EMAIL).required().messages(stringInValidMsg),
   password: Joi.string().min(4).required(),
   confirmPassword: Joi.any().valid(Joi.ref('password')).required().messages({ 'any.only': 'confirm password is not matching' }),
+  mongoId: Joi.string().regex(REGEX.MONOGID),
 };
 
 const signup = {
@@ -33,8 +34,25 @@ const login = {
 const createTask = {
   validate: validator,
   schema: Joi.object().keys({
-    title: Joi.string().required(),
+    taskTitle: Joi.string().required(),
+    taskDescription: Joi.string(),
+    taskCategory: Joi.string(),
+    taskPriorities: Joi.string(),
   }),
 };
 
-module.exports = { signup, login, createTask };
+const updateTask = {
+  validate: validator,
+  schema: createTask.schema.append({
+    taskId: fields.mongoId.required(),
+  }),
+};
+
+const deleteTask = {
+  validate: validator,
+  schema: Joi.object().keys({
+    taskId: fields.mongoId.required(),
+  }),
+};
+
+module.exports = { signup, login, createTask, updateTask, deleteTask };

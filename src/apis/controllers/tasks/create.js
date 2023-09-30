@@ -1,7 +1,11 @@
+const { UserTasks } = require('../../../db');
 const { catchResponse } = require('../../res-handler');
 
 const createTask = async (req) => {
-  return { data: 'abc' };
+  const { taskTitle, taskDescription, taskCategory, taskPriorities } = req.body;
+  const { _id: userId } = req.authorizedUser;
+  const task = await UserTasks.create({ taskTitle, taskDescription, taskCategory, taskPriorities, userId });
+  return task;
 };
 
 const controller = catchResponse(async (req, res) => {

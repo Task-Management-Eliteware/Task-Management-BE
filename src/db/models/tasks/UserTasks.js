@@ -12,7 +12,7 @@ const schema = new mongoose.Schema(
     },
     taskDescription: {
       type: String,
-      required: true,
+      // required: true,
     },
     taskCategory: {
       type: String,
@@ -29,7 +29,7 @@ const schema = new mongoose.Schema(
     },
     isCompleted: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     isActive: {
       type: Boolean,
