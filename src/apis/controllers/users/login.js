@@ -1,4 +1,4 @@
-const { Api404Error, Api400Error, compareHash } = require('../../../shared');
+const { Api404Error, Api400Error, compareHash, signJwt } = require('../../../shared');
 const { catchResponse } = require('../../res-handler');
 const { getUserByEmail } = require('./getUser');
 
@@ -10,8 +10,10 @@ const login = async (req) => {
 
   const isValidPassword = compareHash(password, user.password);
   if (!isValidPassword) throw new Api400Error('Invalid password.');
+  delete user.password;
 
-  return user;
+  const token = signJwt(user);
+  return { token };
 };
 
 const controller = catchResponse(async (req, res) => {

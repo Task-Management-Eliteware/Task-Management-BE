@@ -1,1 +1,1 @@
-module.exports = { user: require('./users') };
+module.exports = { user: require('./users'), task: require('./tasks') };

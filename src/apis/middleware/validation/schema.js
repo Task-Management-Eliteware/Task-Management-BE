@@ -30,4 +30,11 @@ const login = {
   }),
 };
 
-module.exports = { signup, login };
+const createTask = {
+  validate: validator,
+  schema: Joi.object().keys({
+    title: Joi.string().required(),
+  }),
+};
+
+module.exports = { signup, login, createTask };
