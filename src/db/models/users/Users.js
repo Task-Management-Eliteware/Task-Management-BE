@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const { collections } = require('../../../shared');
 
-const modelName = 'users';
+const modelName = collections.users;
 
 const schema = new mongoose.Schema(
   {
