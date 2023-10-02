@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
+var morgan = require('morgan');
 const { appRoutes } = require('./apis');
 const { appError } = require('./shared');
 
@@ -11,6 +12,7 @@ app.use(cors());
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
 
 app.use(BASE_API_PATH, appRoutes);
 app.use(appError);

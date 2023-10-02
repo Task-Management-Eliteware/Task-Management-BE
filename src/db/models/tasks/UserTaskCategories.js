@@ -5,7 +5,7 @@ const modelName = collections.UserTaskCategories;
 
 const schema = new mongoose.Schema(
   {
-    categoriesType: {
+    categoryType: {
       type: String,
       index: true,
     },

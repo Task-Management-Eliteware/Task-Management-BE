@@ -6,10 +6,10 @@ const login = async (req) => {
   const { email, password } = req.body;
   const user = await getUserByEmail(email);
 
-  if (!user) throw new Api404Error('User not exits.');
+  if (!user) throw new Api404Error('Invalid email or password');
 
   const isValidPassword = compareHash(password, user.password);
-  if (!isValidPassword) throw new Api400Error('Invalid password.');
+  if (!isValidPassword) throw new Api400Error('Invalid email or password');
   delete user.password;
 
   const token = signJwt(user);
@@ -18,7 +18,7 @@ const login = async (req) => {
 
 const controller = catchResponse(async (req, res) => {
   const result = await login(req);
-  return { result, statusCode: 201 };
+  return { result, statusCode: 200 };
 });
 
 module.exports = { loginUser: controller };

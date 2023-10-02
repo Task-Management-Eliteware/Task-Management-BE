@@ -1,1 +1,1 @@
-module.exports = { ...require('./bcrypt'), ...require('./jwt') };
+module.exports = { ...require('./bcrypt'), ...require('./jwt'), ...require('./mongoose'), ...require('./string') };

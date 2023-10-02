@@ -55,4 +55,11 @@ const deleteTask = {
   }),
 };
 
-module.exports = { signup, login, createTask, updateTask, deleteTask };
+const createCategory = {
+  validate: validator,
+  schema: Joi.object().keys({
+    categoryType: Joi.string().required(),
+  }),
+};
+
+module.exports = { signup, login, createTask, updateTask, deleteTask, createCategory };
