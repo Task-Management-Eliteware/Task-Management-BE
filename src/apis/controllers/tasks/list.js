@@ -1,21 +1,34 @@
 const { UserTasks } = require('../../../db');
-const { collections, toObjectId } = require('../../../shared');
+const { collections, toObjectId, stringToArray } = require('../../../shared');
 const { catchResponse } = require('../../res-handler');
 
 const listTask = async (req) => {
-  const { taskCategoryIds: catIds } = req.query;
+  const { taskCategoryIds: catIds, pageNumber = 1, limit = 10, sortByField = 'createdAt', sortOrder = 1 } = req.query;
+
   const { _id: userId } = req.authorizedUser;
+
   let taskCategoryIds = [];
   if (catIds) {
-    taskCategoryIds = JSON.parse(catIds).map((id) => toObjectId(id));
+    taskCategoryIds = stringToArray(catIds).map((id) => toObjectId(id));
   }
 
-  const task = await UserTasks.aggregate([
+  const tasks = await UserTasks.aggregate([
     {
       $match: {
         userId: userId,
         isActive: true,
       },
+    },
+    {
+      $sort: {
+        [sortByField]: +sortOrder,
+      },
+    },
+    {
+      $skip: (+pageNumber - 1) * limit,
+    },
+    {
+      $limit: +limit,
     },
     {
       $lookup: {
@@ -40,14 +53,9 @@ const listTask = async (req) => {
         ],
       },
     },
-    {
-      $sort: {
-        updatedAt: -1,
-      },
-    },
   ]);
 
-  return { data: task };
+  return { data: tasks };
 };
 
 const controller = catchResponse(async (req, res) => {
