@@ -1,12 +1,14 @@
 const { Api400Error } = require('../../shared');
+const { responseGenerator } = require('./res-generator');
 
 const catchResponse = (controllerFn) => {
   return async (req, res, next) => {
     try {
-      const result = await controllerFn(req, res, next);
-      res.status(result.statusCode).json({
-        message: result.message,
-        result: result.result,
+      const ctrResponse = await controllerFn(req, res, next);
+      const { statusCode, message, result } = responseGenerator({ httpMethod: req.method, api: req.originalUrl, ...ctrResponse });
+      res.status(statusCode).json({
+        message,
+        result,
       });
     } catch (err) {
       return next(err);

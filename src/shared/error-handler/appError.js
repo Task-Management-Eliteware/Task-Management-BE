@@ -1,10 +1,18 @@
 const appError = (err, req, res, next) => {
+  console.error({ message: err.message, error: err });
   if (!err.isApiError) {
-    console.log('🚀 ~ file: appError.js:3 ~ appError ~ err:', err);
-    res.status(500).json({ message: err });
+    res.status(500).json({
+      error: {
+        message: 'Internal Server Error',
+      },
+    });
     return;
   }
-  res.status(err.statusCode).json({ message: err.message });
+  res.status(err.statusCode).json({
+    error: {
+      message: err.message,
+    },
+  });
 };
 
 module.exports = { appError };

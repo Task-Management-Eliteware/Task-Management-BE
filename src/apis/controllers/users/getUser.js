@@ -14,9 +14,16 @@ const getUserByEmail = async (email) => {
   return formatUser(user);
 };
 
+const getUse = async (req) => {
+  const { _id: userId } = req.authorizedUser;
+  const user = await Users.findOne({ _id: userId, isActive: true }).lean();
+  if (!user) return user;
+  return formatUser(user);
+};
+
 const controller = catchResponse(async (req, res) => {
-  const result = await getUserByEmail(req.email);
+  const result = await getUse(req);
   return { result, statusCode: 201 };
 });
 
-module.exports = { signupUser: controller, getUserByEmail, formatUser };
+module.exports = { getUser: controller, getUserByEmail, formatUser };

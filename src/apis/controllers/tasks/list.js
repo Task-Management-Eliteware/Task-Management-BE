@@ -3,32 +3,23 @@ const { collections, toObjectId, stringToArray } = require('../../../shared');
 const { catchResponse } = require('../../res-handler');
 
 const listTask = async (req) => {
-  const { taskCategoryIds: catIds, pageNumber = 1, limit = 10, sortByField = 'createdAt', sortOrder = 1 } = req.query;
+  const { taskCategories, pageNumber = 1, limit = 10, sortByField = 'createdAt', sortOrder = -1 } = req.query;
 
   const { _id: userId } = req.authorizedUser;
 
+  const skip = (pageNumber - 1) * limit;
+
   let taskCategoryIds = [];
-  if (catIds) {
-    taskCategoryIds = stringToArray(catIds).map((id) => toObjectId(id));
+  if (taskCategories) {
+    taskCategoryIds = JSON.parse(taskCategories).map((id) => toObjectId(id));
   }
 
-  const tasks = await UserTasks.aggregate([
+  const [tasks] = await UserTasks.aggregate([
     {
       $match: {
         userId: userId,
         isActive: true,
       },
-    },
-    {
-      $sort: {
-        [sortByField]: +sortOrder,
-      },
-    },
-    {
-      $skip: (+pageNumber - 1) * limit,
-    },
-    {
-      $limit: +limit,
     },
     {
       $lookup: {
@@ -53,14 +44,46 @@ const listTask = async (req) => {
         ],
       },
     },
+    {
+      $sort: {
+        [sortByField]: +sortOrder,
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        list: { $push: '$$ROOT' },
+      },
+    },
+    { $project: { _id: 0 } },
+    {
+      $project: {
+        totalCount: { $size: '$list' },
+        list: { $slice: ['$list', skip, +limit] },
+      },
+    },
+    {
+      $project: {
+        results: { $size: '$list' },
+        totalRecords: '$totalCount',
+        taskList: '$list',
+      },
+    },
   ]);
 
-  return { data: tasks };
+  return {
+    data: tasks?.taskList || [],
+    pagination: {
+      page: +pageNumber,
+      pageSize: tasks?.results || 0,
+      totalRecords: tasks?.totalRecords || 0,
+    },
+  };
 };
 
 const controller = catchResponse(async (req, res) => {
   const result = await listTask(req);
-  return { result, statusCode: 200 };
+  return { result };
 });
 
 module.exports = { listTask: controller };

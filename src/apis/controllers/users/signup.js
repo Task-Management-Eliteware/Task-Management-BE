@@ -6,7 +6,7 @@ const { getUserByEmail, formatUser } = require('./getUser');
 const createDefaultTaskCategories = async (user) => {
   const { userId } = user;
   const defCategories = defaultCategories.categories.map(({ categoryType }) => ({ categoryType, userId }));
-  const categories = await UserTaskCategories.insertMany(defCategories);
+  await UserTaskCategories.insertMany(defCategories);
 };
 
 const signupUser = async (req) => {
@@ -19,13 +19,13 @@ const signupUser = async (req) => {
 };
 
 const controller = catchResponse(async (req, res) => {
-  const isUserExists = await getUserByEmail(req.email);
+  const isUserExists = await getUserByEmail(req.body.email);
 
   if (isUserExists) {
     throw new Api400Error('Email is Already exits.');
   }
-  const result = await signupUser(req);
-  return { result, statusCode: 201 };
+  await signupUser(req);
+  return;
 });
 
 module.exports = { signupUser: controller };

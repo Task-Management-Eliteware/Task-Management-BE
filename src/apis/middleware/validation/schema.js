@@ -9,7 +9,7 @@ const fields = {
   email: Joi.string().regex(REGEX.EMAIL).required().messages(stringInValidMsg),
   password: Joi.string().min(4).required(),
   confirmPassword: Joi.any().valid(Joi.ref('password')).required().messages({ 'any.only': 'confirm password is not matching' }),
-  mongoId: Joi.string().regex(REGEX.MONOGID),
+  mongoId: Joi.string().regex(REGEX.MONOGID).messages(stringInValidMsg),
 };
 
 const signup = {
@@ -31,12 +31,19 @@ const login = {
   }),
 };
 
+const getUser = {
+  validate: validator,
+  schema: Joi.object().keys({
+    userId: fields.mongoId.required(),
+  }),
+};
+
 const createTask = {
   validate: validator,
   schema: Joi.object().keys({
     taskTitle: Joi.string().required(),
-    taskDescription: Joi.string(),
-    taskCategory: Joi.string(),
+    taskDescription: Joi.string().required(),
+    taskCategoryId: fields.mongoId.required(),
     taskPriorities: Joi.string(),
   }),
 };
@@ -45,6 +52,14 @@ const updateTask = {
   validate: validator,
   schema: createTask.schema.append({
     taskId: fields.mongoId.required(),
+  }),
+};
+
+const checkedTask = {
+  validate: validator,
+  schema: Joi.object().keys({
+    taskId: fields.mongoId.required(),
+    isCompleted: Joi.boolean().required(),
   }),
 };
 
@@ -62,4 +77,4 @@ const createCategory = {
   }),
 };
 
-module.exports = { signup, login, createTask, updateTask, deleteTask, createCategory };
+module.exports = { signup, login, getUser, createTask, updateTask, deleteTask, createCategory, checkedTask };

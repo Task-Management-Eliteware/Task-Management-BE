@@ -6,7 +6,7 @@ const login = async (req) => {
   const { email, password } = req.body;
   const user = await getUserByEmail(email);
 
-  if (!user) throw new Api404Error('Invalid email or password');
+  if (!user) throw new Api400Error('Invalid email or password');
 
   const isValidPassword = compareHash(password, user.password);
   if (!isValidPassword) throw new Api400Error('Invalid email or password');

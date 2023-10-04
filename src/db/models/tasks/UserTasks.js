@@ -12,10 +12,12 @@ const schema = new mongoose.Schema(
     },
     taskDescription: {
       type: String,
+      required: true,
     },
     taskCategoryId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: collections.UserTaskCategories,
+      required: true,
       index: true,
     },
     taskPriorities: {

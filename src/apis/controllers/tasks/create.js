@@ -20,7 +20,7 @@ const createTask = async (req) => {
 
 const controller = catchResponse(async (req, res) => {
   const result = await createTask(req);
-  return { result, statusCode: 201 };
+  return;
 });
 
 module.exports = { createTask: controller };
