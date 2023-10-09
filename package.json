@@ -1,32 +1,44 @@
 {
-  "name": "task_management_be",
+  "name": "task-management-be",
   "version": "1.0.0",
-  "description": "taks management BE",
-  "main": "index.js",
+  "description": "",
+  "main": "src/server.ts",
   "scripts": {
-    "dev": "nodemon src/server.js",
-    "start": "node src/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc && tsc-alias",
+    "start": "node dist/server.js",
+    "dev": "ts-node-dev -r tsconfig-paths/register ./src/server.ts"
   },
-  "author": "dhrumil patanwadiya",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Task-Management-Eliteware/Task-Management-BE.git"
+  },
+  "keywords": [],
+  "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Task-Management-Eliteware/Task-Management-BE/issues"
+  },
+  "homepage": "https://github.com/Task-Management-Eliteware/Task-Management-BE#readme",
   "dependencies": {
-    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "helmet": "^7.0.0",
-    "http-status": "^1.7.0",
-    "joi": "^17.10.2",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^7.5.3",
+    "mongoose": "^7.6.0",
     "morgan": "^1.10.0"
   },
-  "engines": {
-    "node": "16.14.2",
-    "npm": "8.10.0"
-  },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "@types/cors": "^2.8.14",
+    "@types/express": "^4.17.18",
+    "@types/morgan": "^1.9.6",
+    "@types/node": "^20.8.3",
+    "concurrently": "^8.2.1",
+    "cross-env": "^7.0.3",
+    "nodemon": "^3.0.1",
+    "ts-node-dev": "^2.0.0",
+    "tsc-alias": "^1.8.8",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.2.2"
   }
 }
