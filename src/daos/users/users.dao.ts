@@ -6,7 +6,7 @@ class UsersDao {
 
   userSchema = new this.Schema({
     email: String,
-    firstName: String,
+    firstName: String
   });
 
   User = mongooseService.getMongoose().model('User', this.userSchema);
@@ -16,7 +16,10 @@ class UsersDao {
   }
 
   async addUser(input: CreateUserDto) {
-    const user = this.User.create({ email: input.email, firstName: input.firstName });
+    const user = this.User.create({
+      email: input.email,
+      firstName: input.firstName
+    });
     return user;
   }
 

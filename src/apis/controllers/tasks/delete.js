@@ -9,10 +9,10 @@ const deleteTask = async (req) => {
   const task = await UserTasks.findOneAndUpdate(
     { _id: taskId, userId, isActive: true },
     {
-      isActive: false,
+      isActive: false
     },
     {
-      new: true,
+      new: true
     }
   ).lean();
   if (!task) throw new Api404Error('No task found.');

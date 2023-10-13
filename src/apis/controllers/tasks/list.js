@@ -3,7 +3,13 @@ const { collections, toObjectId, stringToArray } = require('../../../shared');
 const { catchResponse } = require('../../res-handler');
 
 const listTask = async (req) => {
-  const { taskCategories, pageNumber = 1, limit = 10, sortByField = 'createdAt', sortOrder = -1 } = req.query;
+  const {
+    taskCategories,
+    pageNumber = 1,
+    limit = 10,
+    sortByField = 'createdAt',
+    sortOrder = -1
+  } = req.query;
 
   const { _id: userId } = req.authorizedUser;
 
@@ -18,19 +24,19 @@ const listTask = async (req) => {
     {
       $match: {
         userId: userId,
-        isActive: true,
-      },
+        isActive: true
+      }
     },
     {
       $lookup: {
         from: collections.UserTaskCategories,
         foreignField: '_id',
         localField: 'taskCategoryId',
-        as: 'tasksCategory',
-      },
+        as: 'tasksCategory'
+      }
     },
     {
-      $unwind: '$tasksCategory',
+      $unwind: '$tasksCategory'
     },
     {
       $match: {
@@ -38,37 +44,37 @@ const listTask = async (req) => {
           { 'tasksCategory._id': { $in: taskCategoryIds } }, // if taskCategoryIds is not empty
           {
             $expr: {
-              $eq: [taskCategoryIds, []], // if taskCategoryIds is empty
-            },
-          },
-        ],
-      },
+              $eq: [taskCategoryIds, []] // if taskCategoryIds is empty
+            }
+          }
+        ]
+      }
     },
     {
       $sort: {
-        [sortByField]: +sortOrder,
-      },
+        [sortByField]: +sortOrder
+      }
     },
     {
       $group: {
         _id: null,
-        list: { $push: '$$ROOT' },
-      },
+        list: { $push: '$$ROOT' }
+      }
     },
     { $project: { _id: 0 } },
     {
       $project: {
         totalCount: { $size: '$list' },
-        list: { $slice: ['$list', skip, +limit] },
-      },
+        list: { $slice: ['$list', skip, +limit] }
+      }
     },
     {
       $project: {
         results: { $size: '$list' },
         totalRecords: '$totalCount',
-        taskList: '$list',
-      },
-    },
+        taskList: '$list'
+      }
+    }
   ]);
 
   return {
@@ -76,8 +82,8 @@ const listTask = async (req) => {
     pagination: {
       page: +pageNumber,
       pageSize: tasks?.results || 0,
-      totalRecords: tasks?.totalRecords || 0,
-    },
+      totalRecords: tasks?.totalRecords || 0
+    }
   };
 };
 

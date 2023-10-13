@@ -1,1 +1,5 @@
-module.exports = { ...require('./error-handler'), ...require('./constance'), ...require('./utils') };
+module.exports = {
+  ...require('./error-handler'),
+  ...require('./constance'),
+  ...require('./utils')
+};

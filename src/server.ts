@@ -43,6 +43,6 @@ const PORT = process.env.SERVICE_PORT;
 app.listen(PORT, () => {
   console.log('task-service started. 😀', {
     service: 'task-service',
-    PORT,
+    PORT
   });
 });

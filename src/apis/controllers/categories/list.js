@@ -7,9 +7,9 @@ const listCategory = async (req) => {
     {
       $match: {
         userId: userId,
-        isActive: true,
-      },
-    },
+        isActive: true
+      }
+    }
   ]);
 
   return { data: task };

@@ -1,15 +1,15 @@
 const defaultCategories = {
   categories: [
     {
-      categoryType: 'none',
+      categoryType: 'none'
     },
     {
-      categoryType: 'work',
+      categoryType: 'work'
     },
     {
-      categoryType: 'personal',
-    },
-  ],
+      categoryType: 'personal'
+    }
+  ]
 };
 
 module.exports = { defaultCategories };

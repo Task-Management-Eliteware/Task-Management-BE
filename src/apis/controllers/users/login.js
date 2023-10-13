@@ -1,4 +1,9 @@
-const { Api404Error, Api400Error, compareHash, signJwt } = require('../../../shared');
+const {
+  Api404Error,
+  Api400Error,
+  compareHash,
+  signJwt
+} = require('../../../shared');
 const { catchResponse } = require('../../res-handler');
 const { getUserByEmail } = require('./getUser');
 

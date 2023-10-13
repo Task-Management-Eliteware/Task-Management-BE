@@ -2,7 +2,10 @@ const { UserTasks } = require('../../../db');
 const { catchResponse } = require('../../res-handler');
 
 const updateCategory = async (req) => {
-  const { taskId, taskTitle, taskDescription, taskCategory, taskPriorities } = { ...req.body, ...req.params };
+  const { taskId, taskTitle, taskDescription, taskCategory, taskPriorities } = {
+    ...req.body,
+    ...req.params
+  };
   const { _id: userId } = req.authorizedUser;
   const task = await UserTasks.findOneAndUpdate(
     { _id: taskId, userId, isActive: true },
@@ -10,7 +13,7 @@ const updateCategory = async (req) => {
       taskTitle,
       taskDescription,
       taskCategory,
-      taskPriorities,
+      taskPriorities
     }
   );
   return task;

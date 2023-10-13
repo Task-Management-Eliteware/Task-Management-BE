@@ -5,7 +5,11 @@ const { catchResponse } = require('../../res-handler');
 const getCategory = async (req) => {
   const { taskId } = req.params;
   const { _id: userId } = req.authorizedUser;
-  const task = await UserTaskCategories.findOne({ _id: taskId, userId, isActive: true }).lean();
+  const task = await UserTaskCategories.findOne({
+    _id: taskId,
+    userId,
+    isActive: true
+  }).lean();
   if (!task) throw new Api404Error('No task found.');
 
   task.taskId = task._id;

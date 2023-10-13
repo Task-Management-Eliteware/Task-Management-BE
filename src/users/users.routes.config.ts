@@ -9,7 +9,10 @@ export class UserRoutes extends CommonRoutesConfig {
   }
 
   configureRoutes(): Application {
-    this.app.route('/users').get(UsersController.listUsers).post(UsersController.createUser);
+    this.app
+      .route('/users')
+      .get(UsersController.listUsers)
+      .post(UsersController.createUser);
 
     return this.app;
   }

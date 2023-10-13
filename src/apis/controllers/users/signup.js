@@ -5,14 +5,21 @@ const { getUserByEmail, formatUser } = require('./getUser');
 
 const createDefaultTaskCategories = async (user) => {
   const { userId } = user;
-  const defCategories = defaultCategories.categories.map(({ categoryType }) => ({ categoryType, userId }));
+  const defCategories = defaultCategories.categories.map(
+    ({ categoryType }) => ({ categoryType, userId })
+  );
   await UserTaskCategories.insertMany(defCategories);
 };
 
 const signupUser = async (req) => {
   const { firstName, lastName, email, password } = req.body;
   const hasPassword = crateHash(password);
-  const user = await Users.create({ firstName, lastName, email, password: hasPassword });
+  const user = await Users.create({
+    firstName,
+    lastName,
+    email,
+    password: hasPassword
+  });
   const formattedUser = formatUser(user.toObject());
   await createDefaultTaskCategories(formattedUser);
   return formattedUser;

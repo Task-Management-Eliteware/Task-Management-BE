@@ -3,15 +3,15 @@ const appError = (err, req, res, next) => {
   if (!err.isApiError) {
     res.status(500).json({
       error: {
-        message: 'Internal Server Error',
-      },
+        message: 'Internal Server Error'
+      }
     });
     return;
   }
   res.status(err.statusCode).json({
     error: {
-      message: err.message,
-    },
+      message: err.message
+    }
   });
 };
 

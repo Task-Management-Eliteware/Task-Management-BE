@@ -4,7 +4,9 @@ const { verifyToken, createCategory } = require('../middleware');
 const routes = express.Router();
 
 routes.use(verifyToken);
-routes.route('/categories').post([createCategory.validate()], categories.createCategory);
+routes
+  .route('/categories')
+  .post([createCategory.validate()], categories.createCategory);
 routes.route('/categories').get(categories.listCategory);
 routes.route('/categories/:categoriesId').get(categories.getCategory);
 routes.route('/categories/:categoriesId').put(categories.createCategory);

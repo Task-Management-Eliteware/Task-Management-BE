@@ -3,7 +3,10 @@ const { Api404Error } = require('../../../shared');
 const { catchResponse } = require('../../res-handler');
 
 const updateTask = async (req) => {
-  const { taskId, taskTitle, taskDescription, taskCategory, taskPriorities } = { ...req.body, ...req.params };
+  const { taskId, taskTitle, taskDescription, taskCategory, taskPriorities } = {
+    ...req.body,
+    ...req.params
+  };
   const { _id: userId } = req.authorizedUser;
   const task = await UserTasks.findOneAndUpdate(
     { _id: taskId, userId, isActive: true },
@@ -11,7 +14,7 @@ const updateTask = async (req) => {
       taskTitle,
       taskDescription,
       taskCategory,
-      taskPriorities,
+      taskPriorities
     }
   );
   if (!task) {
@@ -26,7 +29,7 @@ const checkedTask = async (req) => {
   const task = await UserTasks.findOneAndUpdate(
     { _id: taskId, userId, isActive: true },
     {
-      isCompleted: isCompleted,
+      isCompleted: isCompleted
     }
   );
 
@@ -47,4 +50,7 @@ const checkedTaskController = catchResponse(async (req, res) => {
   return;
 });
 
-module.exports = { updateTask: updateController, checkedTask: checkedTaskController };
+module.exports = {
+  updateTask: updateController,
+  checkedTask: checkedTaskController
+};

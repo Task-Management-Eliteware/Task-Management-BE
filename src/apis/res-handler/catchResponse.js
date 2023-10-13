@@ -5,10 +5,14 @@ const catchResponse = (controllerFn) => {
   return async (req, res, next) => {
     try {
       const ctrResponse = await controllerFn(req, res, next);
-      const { statusCode, message, result } = responseGenerator({ httpMethod: req.method, api: req.originalUrl, ...ctrResponse });
+      const { statusCode, message, result } = responseGenerator({
+        httpMethod: req.method,
+        api: req.originalUrl,
+        ...ctrResponse
+      });
       res.status(statusCode).json({
         message,
-        result,
+        result
       });
     } catch (err) {
       return next(err);

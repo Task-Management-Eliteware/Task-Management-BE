@@ -4,7 +4,7 @@ class MongooseServices {
   private count = 0;
   private mongooseOptions = {
     useNewUrlParser: true,
-    serverSelectionTimeoutMS: 5000,
+    serverSelectionTimeoutMS: 5000
   };
 
   constructor() {
@@ -24,7 +24,11 @@ class MongooseServices {
       })
       .catch((err) => {
         const retrySeconds = 5;
-        console.log(`MongoDB connection unsuccessful (will retry #${++this.count} after ${retrySeconds} seconds):`, err);
+        console.log(
+          `MongoDB connection unsuccessful (will retry #${++this
+            .count} after ${retrySeconds} seconds):`,
+          err
+        );
         setTimeout(this.connectWithRetry, retrySeconds * 1000);
       });
   };

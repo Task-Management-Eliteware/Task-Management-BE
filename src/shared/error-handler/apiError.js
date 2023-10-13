@@ -30,5 +30,5 @@ module.exports = {
   ApiError,
   Api404Error,
   Api401Error,
-  Api400Error,
+  Api400Error
 };

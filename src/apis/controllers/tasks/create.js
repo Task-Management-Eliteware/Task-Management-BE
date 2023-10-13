@@ -3,7 +3,8 @@ const { Api404Error, toObjectId } = require('../../../shared');
 const { catchResponse } = require('../../res-handler');
 
 const createTask = async (req) => {
-  const { taskTitle, taskDescription, taskCategoryId, taskPriorities } = req.body;
+  const { taskTitle, taskDescription, taskCategoryId, taskPriorities } =
+    req.body;
   const { _id: userId } = req.authorizedUser;
   const findCategoryQuery = { userId, categoryType: 'none', isActive: true };
   if (taskCategoryId) {
@@ -14,7 +15,13 @@ const createTask = async (req) => {
   if (!category) {
     throw new Api404Error('Category not exists.');
   }
-  const task = await UserTasks.create({ taskTitle, taskDescription, taskPriorities, userId, taskCategoryId: category._id });
+  const task = await UserTasks.create({
+    taskTitle,
+    taskDescription,
+    taskPriorities,
+    userId,
+    taskCategoryId: category._id
+  });
   return task;
 };
 

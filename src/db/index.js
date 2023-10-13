@@ -1,1 +1,5 @@
-module.exports = { ...require('./connection'), ...require('./models'), ...require('./config') };
+module.exports = {
+  ...require('./connection'),
+  ...require('./models'),
+  ...require('./config')
+};

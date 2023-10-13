@@ -5,7 +5,7 @@ const { verifyJwt, Api401Error, Api404Error } = require('../../../shared');
 const verifyToken = async (req, res, next) => {
   try {
     const {
-      headers: { authorization },
+      headers: { authorization }
     } = req;
 
     if (!authorization || !authorization.startsWith('Bearer')) {

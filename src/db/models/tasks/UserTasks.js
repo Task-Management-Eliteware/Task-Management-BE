@@ -8,35 +8,35 @@ const schema = new mongoose.Schema(
     taskTitle: {
       type: String,
       required: true,
-      index: true,
+      index: true
     },
     taskDescription: {
       type: String,
-      required: true,
+      required: true
     },
     taskCategoryId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: collections.UserTaskCategories,
       required: true,
-      index: true,
+      index: true
     },
     taskPriorities: {
       type: String,
-      default: 'low',
+      default: 'low'
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: collections.users,
-      index: true,
+      index: true
     },
     isCompleted: {
       type: Boolean,
-      default: false,
+      default: false
     },
     isActive: {
       type: Boolean,
-      default: true,
-    },
+      default: true
+    }
   },
   { timestamps: true }
 );

@@ -5,7 +5,7 @@ const expiredIn = process.env.JWT_EXPIRED_IN;
 
 const signJwt = (payload) => {
   const signedPayload = jwt.sign({ user: payload }, secretKey, {
-    expiresIn: expiredIn,
+    expiresIn: expiredIn
   });
 
   return signedPayload;

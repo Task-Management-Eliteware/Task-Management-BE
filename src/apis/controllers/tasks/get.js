@@ -5,7 +5,11 @@ const { catchResponse } = require('../../res-handler');
 const getTask = async (req) => {
   const { taskId } = req.params;
   const { _id: userId } = req.authorizedUser;
-  const task = await UserTasks.findOne({ _id: taskId, userId, isActive: true }).lean();
+  const task = await UserTasks.findOne({
+    _id: taskId,
+    userId,
+    isActive: true
+  }).lean();
   if (!task) throw new Api404Error('No task found.');
 
   task.taskId = task._id;

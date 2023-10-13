@@ -8,27 +8,27 @@ const schema = new mongoose.Schema(
   {
     firstName: {
       type: String,
-      required: true,
+      required: true
     },
     lastName: {
       type: String,
-      required: true,
+      required: true
     },
     email: {
       type: String,
       unique: true,
       lowercase: true,
-      required: true,
+      required: true
     },
     password: {
       type: String,
       required: true,
-      select: false,
+      select: false
     },
     isActive: {
       type: Boolean,
-      default: true,
-    },
+      default: true
+    }
   },
   { timestamps: true }
 );
